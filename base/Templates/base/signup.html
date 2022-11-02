@@ -1,0 +1,37 @@
+{% extends 'base/main.html' %} {% load static %} {% block content %}
+
+<form method="POST" action="">
+  {% csrf_token %}
+  <!-- shey you dey whine me -->
+  {% for field in form %}
+  <div class="mb-6 mx-8 md:mx-[16rem]">
+    <label
+      for="{{field.label}}"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+      >{{field.label}}</label
+    >
+    <div
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    >
+      {{field}}
+    </div>
+  </div>
+  {% endfor %}
+  <button
+    type="submit"
+    class="text-white mb-6 mx-8 md:mx-[16rem] bg-mainBlue hover:bg-mainBlue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-mainBlue dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+  >
+    Submit
+  </button>
+</form>
+
+{% endblock content %}
+
+<!-- <input
+      type="{{field.label}}"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="{{field.label}}"
+      required=""
+    /> -->
+
+in

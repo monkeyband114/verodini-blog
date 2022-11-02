@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../static/css/vid.css" />
+    <title>Verodini</title>
+    <script type="text/javascript">
+      let user = "{{request.user}}";
+
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      const csrftoken = getCookie("csrftoken");
+    </script>
+  </head>
+  <body class="bg-lightGrey2 items-center justify-center">
+    <nav
+      class="bg-lightGrey1 flex flex-row justify-between w-full shadow-lg px-2 lg:px-[200px] pt-2"
+    >
+      <div class="w-[70px] h-[70px]">
+        <img
+          src="{% static 'assets/logo1.png' %}"
+          alt=""
+          class="w-[60px] h-[40px]"
+        />
+      </div>
+      <button id="butm" class="md:hidden w-[50px] h-[50px]">
+        <img
+          id="hamm"
+          src="{% static 'assets/menu.svg' %}"
+          alt=""
+          class="w-[40px] h-[40px]"
+        />
+        <img
+          id="hammx"
+          src="{% static 'assets/chevron.svg' %}"
+          alt=""
+          class="hidden w-[40px] h-[40px]"
+        />
+      </button>
+      <div
+        id="menu"
+        class="hidden absolute flex md:left-0 top-14 right-2 justify-self-start rounded-lg bg-slate-300 md:bg-lightGrey1 md:relative md:mt-0 md:top-0 md:flex flex-col md:flex-row md:justify-between"
+      >
+        <ul class="flex flex-col md:flex-row justify-between mr-2 p-2">
+          <a href="{% url 'home' %}"
+            ><li class="text-mainBlue font-semibold text-[20px] mr-4">
+              Home
+            </li></a
+          >
+          <a href="{% url 'category' %}"
+            ><li class="text-mainBlue font-semibold text-[20px] mr-4">
+              Category
+            </li></a
+          >
+          <a href="{% url 'about' %}"
+            ><li class="text-mainBlue font-semibold text-[20px] mr-4">
+              About Us
+            </li></a
+          >
+        </ul>
+        <div class="flex flex-col md:flex-row pt-0 pb-4 gap-2 px-2">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search"
+            id="search"
+            class="bg-lightGrey2 border-2 mt-2 h-[40px] border-slate-300 rounded-[10px] p-2"
+          />
+          {% if request.user.is_authenticated %}
+          <div class="p-2 flex md:flex-row flex-col gap-2">
+            <a href="#profile">
+              <div class="rounded-full w-[35px] h-[35px]">
+                <img
+                  src="{{user.avatar.url}}"
+                  alt=""
+                  class="object-contain rounded-full"
+                />
+              </div>
+              <div>
+                <p class="text-mainBlue font-semibold">{{user.username}}</p>
+              </div></a
+            >
+
+            <a
+              href="{% url 'logout' %}"
+              class="bg-red-600 rounded-lg text-white p-2 h-[40px]"
+              >logout</a
+            >
+          </div>
+          {% else %}
+          <a
+            href="{% url 'login' %}"
+            class="bg-mainBlue rounded-lg text-white p-2 mt-2 h-[40px]"
+            >Login</a
+          >
+          <a
+            href="{% url 'signup' %}"
+            class="bg-darkGrey rounded-lg text-white p-2 mt-2 h-[40px]"
+            >SignUp</a
+          >
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% block content %} {% endblock content %}
+    <div class="h-[200px]"></div>
+    <footer
+      class="p-4 bg-white mb-0 rounded-lg shadow md:px-6 md:py-8 dark:bg-gray-900"
+    >
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0">
+          <img
+            src="{% static 'assets/logo1.png' %}"
+            class="mr-3 h-8"
+            alt="Flowbite Logo"
+          />
+          <span
+            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+            >Verodini</span
+          >
+        </a>
+        <ul
+          class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400"
+        >
+          <li>
+            <a href="{% url 'about' %}" class="mr-4 hover:underline md:mr-6"
+              >About</a
+            >
+          </li>
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+          </li>
+          <li>
+            <a href="#" class="hover:underline">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <hr
+        class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"
+      />
+      <span
+        class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
+        >© 2022
+        <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>.
+        All Rights Reserved.
+      </span>
+    </footer>
+
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>
